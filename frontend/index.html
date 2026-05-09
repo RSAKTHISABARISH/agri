@@ -1,0 +1,421 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+    <meta http-equiv="Pragma" content="no-cache">
+    <meta http-equiv="Expires" content="0">
+    <title>AgroDirect | Smart Agri-Commerce</title>
+    <meta name="description" content="Direct farm-to-buyer commerce platform with AI pricing and demand insights.">
+    <meta name="theme-color" content="#10B981">
+    <link rel="manifest" href="manifest.json">
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+
+    <!-- Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <!-- Styles -->
+    <link rel="stylesheet" href="css/style.css?v=4">
+</head>
+<body>
+    <div id="app" class="app-container">
+
+        <!-- Top Header -->
+        <header class="main-header">
+            <div class="logo">
+                <i class="fas fa-seedling"></i>
+                <span>AgroDirect</span>
+            </div>
+            <div class="header-actions">
+                <button id="installBtn" class="icon-btn install-btn" title="Install App" style="display:none"><i class="fas fa-download"></i></button>
+                <button id="langBtn" class="icon-btn" title="Switch Language"><i class="fas fa-language"></i></button>
+                <button id="voiceBtn" class="icon-btn voice-trigger" title="Voice Search"><i class="fas fa-microphone"></i></button>
+            </div>
+        </header>
+
+        <main class="content">
+
+            <!-- ===== HOME TAB ===== -->
+            <div id="homeTab" class="tab-content active">
+                <section class="hero">
+                    <div class="hero-overlay"></div>
+                    <div class="hero-content">
+                        <h1 id="heroTitle">Empowering Rural Farmers</h1>
+                        <p id="heroSub">Real-time data from AGMARKNET & EOS Agriculture.</p>
+                    </div>
+                </section>
+
+                <section class="ai-insights-grid">
+                    <div class="insight-card glass">
+                        <div class="card-icon"><i class="fas fa-chart-line"></i></div>
+                        <div class="card-info">
+                            <h3>Price Trend</h3>
+                            <p class="stat" title="Source: AGMARKNET API">↑ 8% <span class="label">Wheat</span></p>
+                        </div>
+                    </div>
+                    <div class="insight-card glass">
+                        <div class="card-icon"><i class="fas fa-cloud-sun"></i></div>
+                        <div class="card-info">
+                            <h3>Best Crop</h3>
+                            <p class="stat" title="Source: Kaggle Crop Recommendation">Maize <span class="label">Predicted</span></p>
+                        </div>
+                    </div>
+                    <div class="insight-card glass">
+                        <div class="card-icon"><i class="fas fa-temperature-half"></i></div>
+                        <div class="card-info">
+                            <h3>Weather</h3>
+                            <p class="stat" title="Source: APIFarmer">36.4°C <span class="label">P. Cloudy</span></p>
+                        </div>
+                    </div>
+                    <div class="insight-card glass">
+                        <div class="card-icon"><i class="fas fa-droplet"></i></div>
+                        <div class="card-info">
+                            <h3>Soil Moisture</h3>
+                            <p class="stat" title="Source: EOS Agriculture API">64% <span class="label">Good</span></p>
+                        </div>
+                    </div>
+                </section>
+
+                <section class="section-container">
+                    <div class="section-header">
+                        <h2 id="demandTitle">Market Demand (AI Sustainable Agri Dataset)</h2>
+                        <a href="#" class="view-all" id="seeAllBtn">See All</a>
+                    </div>
+                    <div class="demand-list" id="demandList">
+                        <!-- Data sourced from backend / AI Sustainable Agriculture Dataset -->
+                        <div class="demand-item glass">
+                            <div class="item-img"><i class="fas fa-wheat-awn"></i></div>
+                            <div class="item-details"><h4>Wheat</h4><p>Demand Index: 0.91</p></div>
+                            <div class="item-price">↑ Rising</div>
+                        </div>
+                        <div class="demand-item glass">
+                            <div class="item-img"><i class="fas fa-bowl-rice"></i></div>
+                            <div class="item-details"><h4>Basmati Rice</h4><p>Demand Index: 0.87</p></div>
+                            <div class="item-price">↑ Rising</div>
+                        </div>
+                        <div class="demand-item glass">
+                            <div class="item-img"><i class="fas fa-seedling"></i></div>
+                            <div class="item-details"><h4>Soybean</h4><p>Demand Index: 0.69</p></div>
+                            <div class="item-price">↓ Falling</div>
+                        </div>
+                    </div>
+                </section>
+            </div>
+
+            <!-- ===== MARKET TAB ===== -->
+            <div id="marketTab" class="tab-content">
+                <section class="section-container">
+                    <div class="section-header">
+                        <h2>📍 AGMARKNET Mandi Rates</h2>
+                    </div>
+                    <p class="section-desc">Live rates from nearby government mandis (Punjab/Haryana)</p>
+
+                    <div class="search-bar glass">
+                        <i class="fas fa-search"></i>
+                        <input type="text" id="marketSearch" placeholder="Search markets or crops...">
+                    </div>
+
+                    <div id="marketList" class="market-grid">
+                        <div class="market-card glass">
+                            <div class="market-rank rank-1">1</div>
+                            <div class="details">
+                                <h4>Khanna Grain Market</h4>
+                                <p><i class="fas fa-route"></i> 6.3 km away (Ludhiana)</p>
+                                <p><i class="fas fa-clock"></i> Open Now · 6AM–8PM</p>
+                                <span class="badge badge-green">High Demand</span>
+                            </div>
+                            <div class="price-tag">
+                                <span class="price">₹2,275</span>
+                                <span class="label">Wheat / quintal</span>
+                                <div class="rating">★ 4.8</div>
+                                <button class="contact-btn">View Rates</button>
+                            </div>
+                        </div>
+                        <div class="market-card glass">
+                            <div class="market-rank rank-2">2</div>
+                            <div class="details">
+                                <h4>Ludhiana Grain Mandi</h4>
+                                <p><i class="fas fa-route"></i> 3.1 km away</p>
+                                <p><i class="fas fa-clock"></i> Open Now · 5AM–9PM</p>
+                                <span class="badge badge-blue">Active</span>
+                            </div>
+                            <div class="price-tag">
+                                <span class="price">₹2,310</span>
+                                <span class="label">Wheat / quintal</span>
+                                <div class="rating">★ 4.9</div>
+                                <button class="contact-btn">View Rates</button>
+                            </div>
+                        </div>
+                        <div class="market-card glass">
+                            <div class="market-rank rank-3">3</div>
+                            <div class="details">
+                                <h4>Morinda Wholesale Market</h4>
+                                <p><i class="fas fa-route"></i> 22.5 km away (Rupnagar)</p>
+                                <p><i class="fas fa-clock"></i> Open Now · 7AM–7PM</p>
+                                <span class="badge badge-blue">Stable</span>
+                            </div>
+                            <div class="price-tag">
+                                <span class="price">₹4,180</span>
+                                <span class="label">Rice / quintal</span>
+                                <div class="rating">★ 4.6</div>
+                                <button class="contact-btn">View Rates</button>
+                            </div>
+                        </div>
+                        <div class="market-card glass">
+                            <div class="market-rank rank-4">4</div>
+                            <div class="details">
+                                <h4>Ambala Anaj Mandi</h4>
+                                <p><i class="fas fa-route"></i> 55.2 km away (Haryana)</p>
+                                <p><i class="fas fa-clock"></i> Open Now · 5AM–8PM</p>
+                                <span class="badge badge-yellow">High Rate</span>
+                            </div>
+                            <div class="price-tag">
+                                <span class="price">₹4,400</span>
+                                <span class="label">Rice / quintal</span>
+                                <div class="rating">★ 4.7</div>
+                                <button class="contact-btn">View Rates</button>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+            </div>
+
+            <!-- ===== LOGISTICS TAB ===== -->
+            <div id="logisticsTab" class="tab-content">
+                <section class="section-container">
+                    <div class="section-header">
+                        <h2>🚚 My Shipments</h2>
+                    </div>
+
+                    <div id="activeShipments">
+                        <!-- Shipment Card 1 -->
+                        <div class="logistics-card glass detailed">
+                            <div class="shipment-header">
+                                <div>
+                                    <span class="shipment-id">AGD-2024-1183</span>
+                                    <span class="status-pill in-transit">In Transit</span>
+                                </div>
+                                <span class="eta"><i class="fas fa-clock"></i> ETA: 1h 40m</span>
+                            </div>
+                            <div class="shipment-body">
+                                <h4>Wheat — Grade A (480 kg)</h4>
+                                <div class="shipment-meta">
+                                    <p><i class="fas fa-map-marker-alt"></i> Currently: Doraha, Ludhiana</p>
+                                    <p><i class="fas fa-flag-checkered"></i> Going to: Khanna Grain Market</p>
+                                    <p><i class="fas fa-truck"></i> Vehicle: PB-10-AB-7632 (Gurpreet Singh)</p>
+                                </div>
+                            </div>
+                            <div class="progress-container">
+                                <div class="progress-labels">
+                                    <span>Pickup</span><span>In Transit</span><span>Delivered</span>
+                                </div>
+                                <div class="progress-bar">
+                                    <div class="progress" style="width: 62%;"></div>
+                                </div>
+                                <span class="progress-pct">62% Complete</span>
+                            </div>
+                        </div>
+
+                        <!-- Shipment Card 2 -->
+                        <div class="logistics-card glass detailed" style="margin-top:1rem">
+                            <div class="shipment-header">
+                                <div>
+                                    <span class="shipment-id">AGD-2024-1187</span>
+                                    <span class="status-pill loading">Loading</span>
+                                </div>
+                                <span class="eta"><i class="fas fa-clock"></i> ETA: 4h 10m</span>
+                            </div>
+                            <div class="shipment-body">
+                                <h4>Basmati Rice (320 kg)</h4>
+                                <div class="shipment-meta">
+                                    <p><i class="fas fa-map-marker-alt"></i> Currently: Morinda Warehouse</p>
+                                    <p><i class="fas fa-flag-checkered"></i> Going to: Ludhiana Grain Mandi</p>
+                                    <p><i class="fas fa-truck"></i> Vehicle: PB-65-CX-1149 (Harjinder Kaur)</p>
+                                </div>
+                            </div>
+                            <div class="progress-container">
+                                <div class="progress-labels">
+                                    <span>Pickup</span><span>In Transit</span><span>Delivered</span>
+                                </div>
+                                <div class="progress-bar">
+                                    <div class="progress" style="width: 20%;"></div>
+                                </div>
+                                <span class="progress-pct">20% Complete</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <h3 class="subsection-title">🧑‍✈️ Available Drivers Nearby</h3>
+                    <div id="driverList" class="driver-list">
+                        <div class="driver-item glass">
+                            <div class="driver-img"><i class="fas fa-user-tie"></i></div>
+                            <div class="item-details">
+                                <h4>Gurpreet Singh</h4>
+                                <p>Mini Truck (1.5T) · 1.8 km away</p>
+                            </div>
+                            <div class="driver-right">
+                                <div class="driver-rating">★ 4.9</div>
+                                <button class="contact-btn small">Book</button>
+                            </div>
+                        </div>
+                        <div class="driver-item glass">
+                            <div class="driver-img"><i class="fas fa-user-tie"></i></div>
+                            <div class="item-details">
+                                <h4>Manpreet Dhaliwal</h4>
+                                <p>Heavy Truck (5T) · 6.1 km away</p>
+                            </div>
+                            <div class="driver-right">
+                                <div class="driver-rating">★ 4.8</div>
+                                <button class="contact-btn small">Book</button>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+            </div>
+
+            <!-- ===== PROFILE TAB ===== -->
+            <div id="profileTab" class="tab-content">
+                <section class="section-container profile-section">
+
+                    <div class="profile-hero">
+                        <div class="profile-avatar-big">
+                            <i class="fas fa-user-circle"></i>
+                            <span class="verified-badge"><i class="fas fa-check-circle"></i> Verified Gold</span>
+                        </div>
+                        <div class="profile-info">
+                            <h2 id="profileName">Amanpreet Singh Gill</h2>
+                            <p id="profileType">Certified Organic Farmer</p>
+                            <p class="profile-location"><i class="fas fa-map-marker-alt"></i> Morinda, Rupnagar, Punjab</p>
+                        </div>
+                    </div>
+
+                    <div class="stats-grid">
+                        <div class="stat-box glass">
+                            <i class="fas fa-indian-rupee-sign stat-icon"></i>
+                            <h3 id="totalSales">₹3,74,500</h3>
+                            <span class="label">Total Sales</span>
+                        </div>
+                        <div class="stat-box glass">
+                            <i class="fas fa-tags stat-icon"></i>
+                            <h3 id="activeOffers">4</h3>
+                            <span class="label">Active Offers</span>
+                        </div>
+                        <div class="stat-box glass">
+                            <i class="fas fa-truck-fast stat-icon"></i>
+                            <h3>31</h3>
+                            <span class="label">Deliveries</span>
+                        </div>
+                        <div class="stat-box glass">
+                            <i class="fas fa-star stat-icon"></i>
+                            <h3>4.9</h3>
+                            <span class="label">Rating</span>
+                        </div>
+                    </div>
+
+                    <div class="farmer-details glass">
+                        <h3>Farm Details (Agricultural Census Data)</h3>
+                        <div class="detail-item">
+                            <span><i class="fas fa-expand"></i> Farm Size</span>
+                            <strong>8.5 Acres</strong>
+                        </div>
+                        <div class="detail-item">
+                            <span><i class="fas fa-droplet"></i> Soil & Moisture</span>
+                            <strong>Sandy Loam, 64% Moisture</strong>
+                        </div>
+                        <div class="detail-item">
+                            <span><i class="fas fa-seedling"></i> Primary Crops</span>
+                            <strong>Wheat, Basmati, Mustard</strong>
+                        </div>
+                        <div class="detail-item">
+                            <span><i class="fas fa-id-card"></i> AGMARKNET ID</span>
+                            <strong>PB-2024-GLL-00382</strong>
+                        </div>
+                        <div class="detail-item">
+                            <span><i class="fas fa-shield-halved"></i> Status</span>
+                            <strong class="verified-text">✓ Verified Gold Member</strong>
+                        </div>
+                    </div>
+
+                    <div class="menu-list glass">
+                        <div class="menu-item">
+                            <i class="fas fa-history"></i>
+                            <span>Order History</span>
+                            <i class="fas fa-chevron-right menu-arrow"></i>
+                        </div>
+                        <div class="menu-item">
+                            <i class="fas fa-wallet"></i>
+                            <span>Payments & Bank</span>
+                            <i class="fas fa-chevron-right menu-arrow"></i>
+                        </div>
+                        <div class="menu-item">
+                            <i class="fas fa-bell"></i>
+                            <span>Notifications</span>
+                            <i class="fas fa-chevron-right menu-arrow"></i>
+                        </div>
+                        <div class="menu-item">
+                            <i class="fas fa-cog"></i>
+                            <span>Settings</span>
+                            <i class="fas fa-chevron-right menu-arrow"></i>
+                        </div>
+                    </div>
+
+                </section>
+            </div>
+        </main>
+
+        <!-- Bottom Navigation -->
+        <nav class="bottom-nav">
+            <a href="#" class="nav-item active" data-tab="home" id="navHome">
+                <i class="fas fa-home"></i>
+                <span>Home</span>
+            </a>
+            <a href="#" class="nav-item" data-tab="market" id="navMarket">
+                <i class="fas fa-store"></i>
+                <span>Market</span>
+            </a>
+            <a href="#" class="nav-item" data-tab="logistics" id="navLogistics">
+                <i class="fas fa-truck"></i>
+                <span>Logistics</span>
+            </a>
+            <a href="#" class="nav-item" data-tab="profile" id="navProfile">
+                <i class="fas fa-user"></i>
+                <span>Profile</span>
+            </a>
+        </nav>
+
+        <!-- Voice Overlay -->
+        <div id="voiceOverlay" class="voice-overlay hidden">
+            <div class="voice-card glass">
+                <div class="pulse-ring"></div>
+                <i class="fas fa-microphone pulse"></i>
+                <p>Listening...</p>
+                <span class="voice-text" id="voiceText">"Say a command..."</span>
+            </div>
+        </div>
+
+    </div>
+
+    <script>
+        if ('serviceWorker' in navigator) {
+            navigator.serviceWorker.getRegistrations().then(regs => {
+                regs.forEach(r => r.unregister());
+            });
+        }
+    </script>
+    <script src="js/app.js?v=4"></script>
+    <script>
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+                navigator.serviceWorker.register('sw.js')
+                    .then(reg => console.log('SW registered'))
+                    .catch(err => console.log('SW failed', err));
+            });
+        }
+    </script>
+</body>
+</html>

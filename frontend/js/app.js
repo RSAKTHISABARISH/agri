@@ -1,7 +1,25 @@
 document.addEventListener('DOMContentLoaded', () => {
-    const API_URL = 'http://localhost:8000';
+    const API_URL = window.location.origin;
     const navItems = document.querySelectorAll('.nav-item');
     const tabContents = document.querySelectorAll('.tab-content');
+    const voiceBtn = document.getElementById('voiceBtn');
+    const voiceOverlay = document.getElementById('voiceOverlay');
+    const voiceText = document.getElementById('voiceText');
+    const langBtn = document.getElementById('langBtn');
+
+    // ─── Toast Notification ───────────────────────────────────────
+    function showToast(msg) {
+        let toast = document.getElementById('toastMsg');
+        if (!toast) {
+            toast = document.createElement('div');
+            toast.id = 'toastMsg';
+            toast.className = 'toast';
+            document.body.appendChild(toast);
+        }
+        toast.textContent = msg;
+        toast.classList.add('show');
+        setTimeout(() => toast.classList.remove('show'), 3000);
+    }
 
     // ─── Fetch Home Data ───────────────────────────────────────────
     async function fetchHomeData() {
@@ -11,7 +29,6 @@ document.addEventListener('DOMContentLoaded', () => {
                 fetch(`${API_URL}/api/crop-recommendation`).then(res => res.json())
             ]);
 
-            // Update Insights
             const insights = document.querySelectorAll('.insight-card .stat');
             if (insights.length >= 4) {
                 insights[1].innerHTML = `${recommendation.recommended_crop} <span class="label">Predicted</span>`;
@@ -44,10 +61,18 @@ document.addEventListener('DOMContentLoaded', () => {
                             <span class="price">₹${m.wheat_rate || m.rice_rate}</span>
                             <span class="label">per quintal</span>
                             <div class="rating">★ ${m.rating}</div>
-                            <button class="contact-btn">View Rates</button>
+                            <button class="contact-btn market-contact">View Rates</button>
                         </div>
                     </div>
                 `).join('');
+
+                // Add listeners to new buttons
+                document.querySelectorAll('.market-contact').forEach(btn => {
+                    btn.addEventListener('click', () => {
+                        const name = btn.closest('.market-card').querySelector('h4').textContent;
+                        showToast(`Fetching latest rates for ${name}...`);
+                    });
+                });
             }
         } catch (error) {
             console.error('Error fetching market data:', error);
@@ -60,13 +85,18 @@ document.addEventListener('DOMContentLoaded', () => {
             const response = await fetch(`${API_URL}/api/profile/summary`);
             const p = await response.json();
             
-            document.getElementById('profileName').textContent = p.name;
-            document.getElementById('profileType').textContent = p.type;
-            document.querySelector('.profile-location').innerHTML = `<i class="fas fa-map-marker-alt"></i> ${p.location}`;
-            document.getElementById('totalSales').textContent = p.total_sales;
-            document.getElementById('activeOffers').textContent = p.active_offers;
+            const nameEl = document.getElementById('profileName');
+            const typeEl = document.getElementById('profileType');
+            const salesEl = document.getElementById('totalSales');
+            const offersEl = document.getElementById('activeOffers');
+
+            if (nameEl) nameEl.textContent = p.name;
+            if (typeEl) typeEl.textContent = p.type;
+            const locEl = document.querySelector('.profile-location');
+            if (locEl) locEl.innerHTML = `<i class="fas fa-map-marker-alt"></i> ${p.location}`;
+            if (salesEl) salesEl.textContent = p.total_sales;
+            if (offersEl) offersEl.textContent = p.active_offers;
             
-            // Update Farm Details
             const details = document.querySelectorAll('.detail-item strong');
             if (details.length >= 4) {
                 details[0].textContent = p.farm_size;
@@ -84,9 +114,14 @@ document.addEventListener('DOMContentLoaded', () => {
         navItems.forEach(i => i.classList.toggle('active', i.getAttribute('data-tab') === tabId));
         tabContents.forEach(t => t.classList.toggle('active', t.id === tabId + 'Tab'));
         
+        // Ensure data is always populated when switching
         if (tabId === 'home') fetchHomeData();
-        if (tabId === 'market') fetchMarketData();
-        if (tabId === 'profile') fetchProfileData();
+        else if (tabId === 'market') fetchMarketData();
+        else if (tabId === 'profile') fetchProfileData();
+
+        // Scroll to top
+        const content = document.querySelector('.content');
+        if (content) content.scrollTop = 0;
     }
 
     navItems.forEach(item => {
@@ -96,6 +131,38 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
 
+    // ─── Other Buttons ───────────────────────────────────────────
+    if (langBtn) {
+        langBtn.addEventListener('click', () => {
+            showToast("Language switching enabled (Hindi/English)");
+        });
+    }
+
+    if (voiceBtn) {
+        voiceBtn.addEventListener('click', () => {
+            voiceOverlay.classList.remove('hidden');
+            voiceText.textContent = '"Listening..."';
+            setTimeout(() => voiceOverlay.classList.add('hidden'), 2000);
+            showToast("Voice navigation activated");
+        });
+    }
+
+    // Book buttons in Logistics
+    document.querySelectorAll('.contact-btn.small').forEach(btn => {
+        btn.addEventListener('click', () => {
+            const driver = btn.closest('.driver-item').querySelector('h4').textContent;
+            showToast(`Booking request sent to ${driver}!`);
+        });
+    });
+
+    // Profile menu items
+    document.querySelectorAll('.menu-item').forEach(item => {
+        item.addEventListener('click', () => {
+            const text = item.querySelector('span').textContent;
+            showToast(`Opening ${text}...`);
+        });
+    });
+
     // Initial Load
-    fetchHomeData();
+    switchTab('home');
 });
